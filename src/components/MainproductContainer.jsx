@@ -22,7 +22,7 @@ const MainproductContainer = () => {
         <div className="container">
 
        <div className="row">
-    
+       //map here
         <div className="col-md-4" >
             <div className="card-wrap" style={{padding:"10px",width:"100%",background:"white",border:"2px solid #B6B6B6",borderRadius:"20px"}}>
 

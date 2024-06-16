@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useRef,useState} from "react";
 import {Box,styled,TextField,Button} from "@mui/material"
 import signup from "../../assets/signup.png"
 import { FiUser } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { GoLock } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
+import { userRegister } from "../../Services/userServices";
+import toast from "react-hot-toast";
+
 
 
 
@@ -38,6 +41,49 @@ const SubRightcontainer = styled(Box)(() => ({
 
 const Signup = () => {
   const navigate=useNavigate()
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("accessToken");
+  //   if (token) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
+
+
+  // const emailRef = useRef(null);
+  // const passwordRef = useRef(null);
+  // const namedRef = useRef(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    // const name = namedRef.current.value;
+    // const email = emailRef.current.value;
+    // const password = passwordRef.current.value;
+
+    if (!name || !email || !password) {
+      toast.error("Please Fill the fields", {
+        duration: 5000,
+        style: {
+          borderRadius: "10px",
+        },
+      });
+      return;
+    }
+
+    const userCredentials = {
+      name,
+      email,
+      password,
+    };
+    console.log(userCredentials);
+    const register = await userRegister(userCredentials);
+    if (register) {
+      navigate("/login");
+    }
+  };
   return (
     <>
     <Maincontainer>
@@ -78,14 +124,16 @@ const Signup = () => {
 
             <Box sx={{display:"flex",backgroundColor:"#F4F8F5",padding:".3rem",gap:".8rem",borderRadius:"2rem"}}> 
             <FiUser style={{height:"4rem",width:"1.2rem"}}/>
-            <TextField id="standard-basic" label="Name" variant="standard" InputProps={{ disableUnderline: true }} />
+            <TextField id="standard-basic" label="Name" variant="standard" value={name} 
+                  onChange={(e) => setName(e.target.value)}InputProps={{ disableUnderline: true }} />
 
 
             </Box>
 
             <Box sx={{display:"flex",backgroundColor:"#F4F8F5",padding:".3rem",gap:".8rem",borderRadius:"2rem"}}> 
             <HiOutlineMail style={{height:"4rem",width:"1.2rem"}} />
-            <TextField id="standard-basic" label="Email" variant="standard" InputProps={{ disableUnderline: true }}/>
+            <TextField id="standard-basic" label="Email"     value={email} onChange={(e)=>setEmail(e.target.value)}
+ variant="standard" InputProps={{ disableUnderline: true }}/> 
 
 
             </Box>
@@ -93,12 +141,12 @@ const Signup = () => {
 
             <Box sx={{display:"flex",backgroundColor:"#F4F8F5",padding:".3rem",gap:".8rem",borderRadius:"2rem"}}> 
             <GoLock style={{height:"4rem",width:"1.2rem"}}/>
-            <TextField id="standard-basic" label="Password" variant="standard" InputProps={{ disableUnderline: true }} />
+            <TextField id="standard-basic" label="Password" variant="standard"   value={password} onChange={(e)=>setPassword(e.target.value)} InputProps={{ disableUnderline: true }} />
 
 
             </Box>
             <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-            <Button  sx={{backgroundColor:"#EDA415",width:"90%",borderRadius:"25px",'&:hover': {
+            <Button onClick={handleRegister} sx={{backgroundColor:"#EDA415",width:"90%",borderRadius:"25px",'&:hover': {
           backgroundColor: '#007bff', 
           transition: 'background-color 0.2s ease-in-out', 
         },}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN UP</span></Button>

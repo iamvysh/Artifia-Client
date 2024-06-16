@@ -1,8 +1,11 @@
-import React from "react";
+import React ,{useState,useEffect}from "react";
 import { Box, Button, styled,TextField } from "@mui/material";
 import { HiOutlineMail } from "react-icons/hi";
 import { GoLock } from "react-icons/go";
-import {Link, useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
+import toast from "react-hot-toast";
+import { userLogin } from "../../Services/userServices";
+
 
 
 
@@ -36,6 +39,37 @@ const SubRightcontainer = styled(Box)(() => ({
 
 const Signin = () => {
   const navigate=useNavigate()
+  // useEffect(() => {
+  //   const token = localStorage.getItem("accessToken");
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("")
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    if (!email || !password) {
+      toast.error("Please Fill the fields", {
+        duration: 5000,
+        style: {
+          borderRadius: "10px",
+        },
+      });
+      return;
+    }
+    const loginCredentials = {
+      email,
+      password
+    };
+    const login = await userLogin(loginCredentials);
+    if (login) {
+      navigate("/");
+    }
+  };
+
   return (
     <>
       <Maincontainer>
@@ -53,7 +87,7 @@ const Signin = () => {
 
               <Box sx={{display:"flex",backgroundColor:"#F4F8F5",padding:".3rem",gap:".8rem",borderRadius:"2rem"}}> 
             <HiOutlineMail style={{height:"4rem",width:"1.2rem"}} />
-            <TextField id="standard-basic" label="Email" variant="standard" InputProps={{ disableUnderline: true }}/>
+            <TextField id="standard-basic" label="Email" variant="standard" InputProps={{ disableUnderline: true }} value={email} onChange={(e)=> setEmail(e.target.value) }/>
 
 
             </Box>
@@ -61,7 +95,7 @@ const Signin = () => {
 
             <Box sx={{display:"flex",backgroundColor:"#F4F8F5",padding:".3rem",gap:".8rem",borderRadius:"2rem"}}> 
             <GoLock style={{height:"4rem",width:"1.2rem"}}/>
-            <TextField id="standard-basic" label="Password" variant="standard" InputProps={{ disableUnderline: true }} />
+            <TextField id="standard-basic" label="Password" variant="standard" InputProps={{ disableUnderline: true }} value={password} onChange={(e)=>setPassword(e.target.value)} />
 
 
             </Box>
@@ -70,10 +104,10 @@ const Signin = () => {
 
             </Box>
             <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-            <Button  sx={{backgroundColor:"#EDA415",width:"90%",borderRadius:"25px",'&:hover': {
+            <Button  onClick={handleLogin} sx={{backgroundColor:"#EDA415",width:"90%",borderRadius:"25px",'&:hover': {
           backgroundColor: '#007bff', 
           transition: 'background-color 0.2s ease-in-out', 
-        },}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN IN</span></Button>
+        }}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN IN</span></Button>
             </Box>
               </Box>
             
