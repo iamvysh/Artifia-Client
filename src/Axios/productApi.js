@@ -18,5 +18,5 @@ export const addCategory = (category) => {
   }
 
   export const Addproduct=(data,id)=>{
-    return axiosInstance().post(`/admin/create/product/${id}`,{...data})
+    return axiosInstance().post(`/admin/create/product/${id}`,{data})
   }

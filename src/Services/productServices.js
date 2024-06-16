@@ -81,9 +81,26 @@ export async function createCategory(categoryData) {
   }
  export async function createproduct(categoryData,id){
     try {
-        const res = await Addproduct(categoryData,id);
+    console.log(categoryData,"kfbhsadhfghjs");
+      
+    const formData = new FormData();
+    formData.append("title",categoryData.title);
+    formData.append("ram",categoryData.ram);
+    formData.append("price",categoryData.price);
+    formData.append("category",categoryData.productCategory);
+    formData.append("description",categoryData.description)
+    for (let i = 0; i <categoryData.images.length; i++) {
+      formData.append('images',categoryData.images[i]);
+   }
+
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      };
+      const res = await axios.post(`${baseURL}/admin/create/product/${id}`, formData, {
+      headers,
+      });
       if (res) {
-        toast.success("category added successfully", {
+        toast.success(res?.data?.message, {
           duration: 5000,
           style: {
             borderRadius: "10px",
@@ -93,6 +110,7 @@ export async function createCategory(categoryData) {
       return res;
         
     } catch (error) {
+      console.log(error);
         toast.error(error?.errorMessage || "something went wrong", {
             duration: 5000,
             style: {

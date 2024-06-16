@@ -155,7 +155,7 @@ const handleAddSubCategory=async(e)=>{
 
 const [subCategories,setSubCategories]=useState([])
 const [title, setTitle] = useState('');
-const [Ram,setRam]=useState('')
+const [ram,setram]=useState('')
 const [price,setPrice]=useState('')
 const [productCategory,setProductCategory]=useState(null)
 const [productSubCategory,setProductSubCategory]=useState(null)
@@ -176,21 +176,18 @@ const handleImageChange = (event) => {
 
 const handleProductCreation=async(e)=>{
   e.preventDefault()
-  console.log(title,Ram,price,productCategory,productSubCategory,description,images);
+  // console.log(title,Ram,price,productCategory,productSubCategory,description,images);
+ const data={
+  title,ram,price,productCategory,description,images
+ }
  
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("ram", Ram);
-  formData.append("price", price);
-  formData.append("category", category);
-  formData.append("description",description)
-  // for (let i = 0; i < images.length; i++) {
-    formData.append('images', images);
-// }
-  const res=await createproduct(formData,productSubCategory)
+  const res=await createproduct(data,productSubCategory)
 
   if(res){
-    alert(dshckh)
+    setTitle('')
+    setram('')
+    setPrice('')
+    setDescription('')
   }
 
 }
@@ -203,7 +200,7 @@ useEffect(()=>{
   GetSubcategories()
 },[])
 
-console.log(title,Ram,price,productCategory,productSubCategory,description,images);
+
 
   return (
     <>
@@ -368,8 +365,9 @@ console.log(title,Ram,price,productCategory,productSubCategory,description,image
               </label>
               <input
                 type="text"
-               onChange={(e)=>setRam(e.target.value)}
-               
+                
+                value={ram}
+               onChange={(e)=>setram(e.target.value)}
                 style={{
                   padding: '8px',
                   border: '1px solid #ccc',
