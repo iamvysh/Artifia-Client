@@ -2,7 +2,8 @@ import React from "react";
 import { Box, Button, styled,TextField } from "@mui/material";
 import { HiOutlineMail } from "react-icons/hi";
 import { GoLock } from "react-icons/go";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
+
 
 
 const Maincontainer = styled(Box)(() => ({
@@ -34,6 +35,7 @@ const SubRightcontainer = styled(Box)(() => ({
 }));
 
 const Signin = () => {
+  const navigate=useNavigate()
   return (
     <>
       <Maincontainer>
@@ -71,7 +73,7 @@ const Signin = () => {
             <Button  sx={{backgroundColor:"#EDA415",width:"90%",borderRadius:"25px",'&:hover': {
           backgroundColor: '#007bff', 
           transition: 'background-color 0.2s ease-in-out', 
-        },}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN UP</span></Button>
+        },}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN IN</span></Button>
             </Box>
               </Box>
             
@@ -194,7 +196,7 @@ const Signin = () => {
                 Enter your personal details and <br/>
                    start your journey with us    
             </p>
-            <Button  sx={{backgroundColor:"transparent",width:"60%",borderRadius:"25px",border:"2px solid white " ,marginTop:"1.5rem"}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN UP</span></Button>
+            <Button onClick={()=>navigate("/register")}   sx={{backgroundColor:"transparent",width:"60%",borderRadius:"25px",border:"2px solid white " ,marginTop:"1.5rem"}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN UP</span></Button>
           </div>
         </SubRightcontainer>
       </Maincontainer>

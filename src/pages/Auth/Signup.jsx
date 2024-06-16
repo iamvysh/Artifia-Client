@@ -4,6 +4,7 @@ import signup from "../../assets/signup.png"
 import { FiUser } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { GoLock } from "react-icons/go";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -36,6 +37,7 @@ const SubRightcontainer = styled(Box)(() => ({
 
 
 const Signup = () => {
+  const navigate=useNavigate()
   return (
     <>
     <Maincontainer>
@@ -54,7 +56,7 @@ const Signup = () => {
 
 
            
-            <Button  sx={{background:"#003F62",width:"60%",borderRadius:"25px",border:"2px solid white " ,marginTop:"1rem"}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN IN</span></Button>
+            <Button  onClick={()=>navigate("/login")} sx={{background:"#003F62",width:"60%",borderRadius:"25px",border:"2px solid white " ,marginTop:"1rem"}} size="large"><span style={{color:"white",letterSpacing:"2px"}}>SIGN IN</span></Button>
 
 
 
